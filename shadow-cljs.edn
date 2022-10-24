@@ -1,0 +1,44 @@
+{:source-paths ["src"]
+
+ :dependencies [[reagent "1.1.1"]
+                [devcards "0.2.6"]
+                [funcool/promesa "9.0.489"]
+                [nubank/matcher-combinators "3.5.1"]
+                [binaryage/devtools "1.0.6"]
+                [lambdaisland/fetch "1.1.60"]
+                [metosin/reitit "0.5.18"]
+                [metosin/reitit-frontend "0.5.18"]
+                [metosin/malli "0.9.2"]]
+
+ :dev-http   {3000 "resources/public"
+              3001 "resources/cards"}
+
+ :build-defaults
+ {:closure-defines
+   {app.http-ports/API_HOST "http://localhost:3000"}}
+
+ :builds
+ {:app
+  {:asset-path "/js"
+   :output-dir "resources/public/js"
+   :target     :browser
+   :devtools   {:reload-strategy :full}
+   :dev {:modules {:main {:init-fn dev.core/main}}}
+   :release {:modules {:main {:init-fn app.core/main}}}}
+
+  :cards
+  {:asset-path "/js"
+   :compiler-options {:devcards true}
+   :modules {:main {:init-fn cards.core/main}}
+   :output-dir "resources/cards/js"
+   :target :browser}
+
+  :test
+  {:ns-regexp "cards.test.setup"
+   :output-to "out/test.js"
+   :target :node-test}
+
+  :e2e
+  {:ns-regexp "e2e.*"
+   :output-to "out/e2e.js"
+   :target :node-test}}}

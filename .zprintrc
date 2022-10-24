@@ -1,0 +1,6 @@
+{:width   80
+ :style   :justified
+ :binding {:justify? true}
+ :map     {:justify? true
+           :comma?   false}
+ :pair    {:justify? true}}

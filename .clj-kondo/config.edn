@@ -1,0 +1,19 @@
+{:config-paths
+ ["funcool/promesa"
+  "etaoin/etaoin/etaoin"
+  "babashka/fs"
+  "metosin/malli"]
+
+ :linters
+ {:clojure-lsp/unused-public-var
+  {:level :warning
+   :exclude #{cards.test.aux/_wait-for}}
+
+  :unsorted-required-namespaces
+  {:level :warning}}
+
+ :lint-as
+ {reagent.core/with-let   clojure.core/let
+  cards.test.aux/let-wait clojure.core/let
+  devcards.core/defcard   cljs.test/deftest
+  devcards.core/deftest   cljs.test/deftest}}

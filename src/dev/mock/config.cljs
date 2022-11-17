@@ -12,7 +12,9 @@
                  (mg/generate WalletHistory))}}
 
    (http/api "/wallet/deposit")
-   {:post {:status 201}}
+   {:post {:status 201
+           :lag 3000}}
+           
    
    (http/api "/wallet/withdrawal")
    {:post {:status 201}}})

@@ -3,8 +3,9 @@
 
 (defn resolve-body-fn [{:keys [body]} args] (apply body args))
 
-(defn resolve-body-map [{:keys [content-type body status]} [_req res ctx]]
-  (res (when status (.status ctx (or status :200)))
+(defn resolve-body-map [{:keys [lag content-type body status]} [_req res ctx]]
+  (res (when lag (.delay ctx lag))
+       (when status (.status ctx (or status :200)))
        (when body (.call (aget ctx (name content-type)) ctx body))))
 
 (defn resolve-body [options args]

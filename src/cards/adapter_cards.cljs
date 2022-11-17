@@ -58,4 +58,3 @@
       (is (match? (count (:entries wallet))
                   (.. json-wallet -entries -length)))
       (is (match? wallet from-js-land)))))
-

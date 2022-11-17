@@ -1,14 +1,14 @@
-(ns cards.core {:clj-kondo/config {:linters {:unsorted-required-namespaces {:level :off}}}}
+(ns cards.core 
+    #_{:clj-kondo/ignore [:unsorted-required-namespaces]}
     (:require [cljsjs.react]
               [cljsjs.react.dom]
               [malli.dev.cljs :as md]
               [cards.test.matcher-setup]
               [devcards.core :refer [start-devcard-ui!]]
-              ; Cards
-              [cards.wallet-history-cards]
               [cards.adapter-cards]
-              [cards.simple-components]
-              [cards.user-story.wallet-journey-cards]))
+              [cards.simple-components-cards]
+              [cards.user-story.wallet-journey-cards]
+              [cards.wallet-history-cards]))
 
 (defn ^:export main []
   (md/start!)

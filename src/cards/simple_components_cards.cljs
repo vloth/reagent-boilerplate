@@ -1,4 +1,4 @@
-(ns cards.simple-components
+(ns cards.simple-components-cards
   (:require [app.components :as c]
             [cards.test.aux :as t]
             [cljs.test :refer [is testing]]

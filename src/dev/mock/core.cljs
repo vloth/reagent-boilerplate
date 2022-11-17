@@ -1,12 +1,12 @@
 (ns dev.mock.core
   (:require ["msw" :as msw]
             ["msw/node" :as msw-node]
+            [dev.browser-storage :as s]
             [dev.mock.config :refer [config]]
             [dev.mock.mount :refer [mount]]
-            [dev.session-storage :as ss]
             [promesa.core :as p]))
 
-(def ^:private ss-key "mock-active?")
+(def ^:private mock-active-key "mock-active?")
 
 (defonce mock-state (atom nil))
 
@@ -15,14 +15,14 @@
 (defn start-browser [handlers]
   (when-not (nil? @mock-state)
     (.resetHandlers ^js/Object @mock-state))
-  (p/do (reset! mock-state handlers)
-        (.start @mock-state #js {:onUnhandledRequest "bypass"})
-        (ss/set-item! ss-key true)))
+  (s/local-set! mock-active-key true)
+  (.start (reset! mock-state handlers)
+          #js {:onUnhandledRequest "bypass"}))
 
 (defn stop-browser []
   (.stop @mock-state)
   (reset! mock-state nil)
-  (ss/remove-item! ss-key))
+  (s/local-del! mock-active-key))
 
 (defn start-node [handlers]
   (p/do (reset! mock-state handlers)
@@ -44,6 +44,6 @@
   (if (node?) (stop-node) (stop-browser)))
 
 (defn init! []
-  (if (ss/get-item ss-key)
+  (if (s/local-get mock-active-key)
     (start!)
     (js/Promise.resolve)))

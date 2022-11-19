@@ -5,14 +5,23 @@ _(created first with [create-cljs-app](https://github.com/filipesilva/create-clj
 
 ## Directory structure
 ```
-reagent-boilerplate
-├── resources
-|  ├── cards   cards public folder
-|  └── public  application public folder
-└── src
-   ├── app     application source code
-   ├── cards   cards and test source code
-   └── dev     development and instrumentation
+./reagent-boilerplate
+├── cards              cards source code
+|  ├── cards_node.cljs node test entry point
+|  ├── cards_ui.cljs   cards ui entry point
+|  ├── deck            unit cards
+|  └── flow            flow cards
+|
+├── dev                dev source code
+|  ├── dev_core.cljs   starts application with dev instrumentation
+|  └── mock            dev mocking code
+|
+├── resources          application resources
+|  ├── cards           public cards resouces
+|  └── public          public application resources
+|
+└── src                production source code
+   └── app             application source code
 ```
 ## Getting started
 Run `yarn` to install dependencies and `yarn start` to start your application.  

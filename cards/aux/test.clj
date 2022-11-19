@@ -1,4 +1,4 @@
-(ns cards.test.aux)
+(ns aux.test)
 
 (defmacro let-wait
   [bindings & body]

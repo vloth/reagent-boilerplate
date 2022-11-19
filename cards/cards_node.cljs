@@ -1,4 +1,4 @@
-(ns cards.test.setup
+(ns cards-node
   "Setup happy-dom globally. 
   This file should not be required for the browser bundle.
   happy-dom requires nodejs libraries and is not isomorphic."
@@ -7,13 +7,13 @@
             [cljsjs.react.dom]
             ["@happy-dom/global-registrator" :as happy-dom]
             [malli.dev.cljs :as md]
-            [cards.adapter-cards]
-            [cards.simple-components-cards]
-            [cards.user-story.wallet-journey-cards]
-            [cards.wallet-history-cards]))
+            ; Cards
+            [deck.adapter-card]
+            [deck.component-card]
+            [deck.wallet-history-card]
+            [flow.wallet-flow-card]))
 
 (.register happy-dom/GlobalRegistrator)
-
 (set! (.-node? js/window) true)
 
 (md/start!)

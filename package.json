@@ -1,7 +1,7 @@
 {
   "name": "reagent-boilerplate",
   "version": "0.0.1",
-  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "postinstall": "msw init resources/public --no-save;msw init resources/cards --no-save;",
     "start": "shadow-cljs watch app",

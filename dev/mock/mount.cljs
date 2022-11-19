@@ -1,4 +1,4 @@
-(ns dev.mock.mount
+(ns mock.mount
   (:require ["msw" :as msw]))
 
 (defn resolve-body-fn [{:keys [body]} args] (apply body args))

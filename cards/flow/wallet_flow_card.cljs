@@ -1,13 +1,13 @@
-(ns cards.user-story.wallet-journey-cards
+(ns flow.wallet-flow-card
   (:require [app.adapters :refer [wallet-history->json]]
             [app.http-ports :as http]
             [app.pages :as pages]
-            [cards.test.aux :as t]
-            [cards.wallet-history-cards :refer [a-wallet]]
+            [aux.test :as t]
             [cljs.test :refer [async is]]
-            [dev.mock.core :as mock]
+            [deck.wallet-history-card :refer [a-wallet]]
             [devcards.core :refer [defcard deftest]]
             [matcher-combinators.test :refer [match?]]
+            [mock.core :as mock]
             [promesa.core :as p]))
 
 (defcard "User wallet journey")

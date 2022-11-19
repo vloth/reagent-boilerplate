@@ -1,10 +1,9 @@
-(ns cards.test.aux
-  {:clj-kondo/config {:linters {:unsorted-required-namespaces {:level :off}
-                                :unused-namespace {:exclude ["promesa.core"]}}}}
-  (:require-macros [cards.test.aux])
+(ns aux.test
+  (:require-macros [aux.test])
+  #_{:clj-kondo/ignore [:unused-namespace]}
   (:require ["@testing-library/react" :as tlr]
-            [reagent.core :as r]
-            [promesa.core :as p]))
+            [promesa.core :as p]
+            [reagent.core :as r]))
 
 (def _wait-for tlr/waitFor)
 
@@ -26,10 +25,12 @@
 
 (defn length [el] (.-length el))
 
-(defn get-class [^js/Element el] 
+(defn get-class [^js/Element el]
   (.toString (.-classList el)))
 
-(defn click [^js/Element el] (.click tlr/fireEvent el))
+(defn click
+  [^js/Element el]
+  (.click tlr/fireEvent el))
 
 (defn qs
   ([^js/Element container query-data]

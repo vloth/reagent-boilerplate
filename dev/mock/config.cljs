@@ -1,4 +1,4 @@
-(ns dev.mock.config
+(ns mock.config
   (:require [app.adapters :refer [wallet-history->json]]
             [app.http-ports :as http]
             [app.schemas :refer [WalletHistory]]

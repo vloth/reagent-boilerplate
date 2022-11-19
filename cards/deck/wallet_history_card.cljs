@@ -1,7 +1,7 @@
-(ns cards.wallet-history-cards
+(ns deck.wallet-history-card
   (:require [app.components :as c]
             [app.schemas :refer [WalletEntry WalletHistory]]
-            [cards.test.aux :as t]
+            [aux.test :as t]
             [cljs.test :refer [is testing]]
             [devcards.core :as dc :refer [defcard defcard-doc deftest]]
             [malli.generator :as mg]

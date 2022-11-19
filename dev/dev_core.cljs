@@ -1,7 +1,7 @@
-(ns dev.core
+(ns dev-core
   (:require [app.core :as app]
-            [dev.mock.core :as mock]
             [malli.dev.cljs :as md]
+            [mock.core :as mock]
             [promesa.core :as p]))
 
 (def debug? ^boolean goog.DEBUG)
@@ -22,10 +22,10 @@
     (mock/init!)
     (app/render)))
 
-(comment "Start mock service worker"
-         (p/do (mock/start!)
-               (.reload js/location)))
+(comment
+  "Start mock service worker"
+  (mock/start!))
 
-(comment "Stop mock service worker"
-         (p/do (mock/stop!)
-               (.reload js/location)))
+(comment
+  "Stop mock service worker"
+  (mock/stop!))

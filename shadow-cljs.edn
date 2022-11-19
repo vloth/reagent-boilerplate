@@ -1,4 +1,4 @@
-{:source-paths ["src"]
+{:source-paths ["src" "dev" "cards"]
 
  :dependencies [[reagent "1.1.1"]
                 [devcards "0.2.6"]
@@ -15,7 +15,7 @@
 
  :build-defaults
  {:closure-defines
-   {app.http-ports/API_HOST "http://localhost:3000"}}
+  {app.http-ports/API_HOST "http://localhost:3000"}}
 
  :builds
  {:app
@@ -23,22 +23,17 @@
    :output-dir "resources/public/js"
    :target     :browser
    :devtools   {:reload-strategy :full}
-   :dev {:modules {:main {:init-fn dev.core/main}}}
+   :dev {:modules {:main {:init-fn dev-core/main}}}
    :release {:modules {:main {:init-fn app.core/main}}}}
 
   :cards
   {:asset-path "/js"
    :compiler-options {:devcards true}
-   :modules {:main {:init-fn cards.core/main}}
+   :modules {:main {:init-fn cards-ui/main}}
    :output-dir "resources/cards/js"
    :target :browser}
 
   :test
-  {:ns-regexp "cards.test.setup"
+  {:ns-regexp "cards-node"
    :output-to "out/test.js"
-   :target :node-test}
-
-  :e2e
-  {:ns-regexp "e2e.*"
-   :output-to "out/e2e.js"
    :target :node-test}}}

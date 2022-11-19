@@ -1,6 +1,6 @@
-(ns cards.simple-components-cards
+(ns deck.component-card
   (:require [app.components :as c]
-            [cards.test.aux :as t]
+            [aux.test :as t]
             [cljs.test :refer [is testing]]
             [devcards.core :refer [defcard deftest] :as dc]
             [matcher-combinators.test :refer [match?]]))

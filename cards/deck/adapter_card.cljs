@@ -1,7 +1,7 @@
-(ns cards.adapter-cards
+(ns deck.adapter-card
   (:require [app.adapters :as adapters]
-            [cards.wallet-history-cards :refer [a-wallet]]
             [cljs.test :refer [are is testing]]
+            [deck.wallet-history-card :refer [a-wallet]]
             [devcards.core :as dc :refer [defcard-doc deftest]]
             [matcher-combinators.test :refer [match?]]))
 

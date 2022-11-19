@@ -1,4 +1,5 @@
-(ns cards.test.matcher-setup
+(ns aux.matcher-setup
+  "Fix nubank/match report on devcards ui."
   (:require [cljs.test :as t]
             [matcher-combinators.cljs-test]
             [matcher-combinators.printer]

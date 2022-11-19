@@ -12,9 +12,7 @@
 
 (defcard "User wallet journey")
 
-(set! devcards.core/test-timeout 2000)
-
-(def wallet (a-wallet))
+(def wallet (a-wallet :at-least-one))
 
 (def config
   {(http/api "/wallet/history")
@@ -25,10 +23,8 @@
 (deftest an-user-wallet-journey
   (async done
     (p/do (mock/start! config)
-          (t/let-wait [container (t/render [:f> pages/home])
-                       rows (t/qs+ container :row)]
-                      (is (match?  (inc (count (:entries wallet))) ;inc because header +1
-                                   (count rows)))
-                      (t/cleanup)
-                      (mock/stop!)
-                      (done)))))
+          (p/let [$ (t/render [:f> pages/home])
+                  rows (t/wait-for #($ {:find :row :many? true}))]
+            (is (match?  (inc (count (:entries wallet))) ;inc because header +1
+                         (count rows)))
+            (t/cleanup mock/stop! done)))))

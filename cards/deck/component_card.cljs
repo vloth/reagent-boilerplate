@@ -32,34 +32,34 @@
 
 (deftest alert-test
   (testing "render info alert"
-    (let [container (t/render [c/alert :info "info"])]
+    (let [$ (t/render [c/alert :info "info"])]
       (is (match? "info"
-                  (-> (t/q container :alert) (t/text))))
+                  (t/text ($ {:get :alert})))) 
       (t/cleanup)))
 
   (testing "render warning alert with icon"
-    (let [container (t/render [c/alert :bi-exclamation-diamond :warning "warn"])]
+    (let [$ (t/render [c/alert :bi-exclamation-diamond :warning "warn"])]
       (is (match? #"bi-exclamation-diamond"
-                  (-> (t/q container :img) (t/get-class))))
+                  (t/get-class ($ {:get :img}))))
       (t/cleanup))))
 
 (deftest thwarted-test
   (testing "thwarted unreachable network"
-    (let [container (t/render [c/thwarted-http {:status 404}])]
+    (let [$ (t/render [c/thwarted-http {:status 404}])]
       (is (match? #"Could not reach server."
-                  (-> (t/q container :alert) (t/text))))
+                  (t/text ($ {:get :alert})))) 
       (t/cleanup)))
 
   (testing "thwarted unknown error"
-    (let [container (t/render [c/thwarted-http {:body "Internal error"}])]
+    (let [$ (t/render [c/thwarted-http {:body "Internal error"}])]
       (is (match? #"Internal error"
-                  (-> (t/q container :alert) (t/text))))
+                  (t/text ($ {:get :alert}))))
       (t/cleanup))))
 
 (deftest hader
   (testing "render nav items"
-    (let [container (t/render [c/header name])]
+    (let [$ (t/render [c/header name])]
       (is (match? ["Home" "Deposit" "Withdraw"]
-                  (mapv t/text (t/qs container :listitem))))
+                  (mapv t/text ($ {:get :listitem :many? true}))))
       (t/cleanup))))
 

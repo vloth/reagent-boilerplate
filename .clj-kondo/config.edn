@@ -14,6 +14,5 @@
 
  :lint-as
  {reagent.core/with-let   clojure.core/let
-  aux.test/let-wait       clojure.core/let
   devcards.core/defcard   cljs.test/deftest
   devcards.core/deftest   cljs.test/deftest}}

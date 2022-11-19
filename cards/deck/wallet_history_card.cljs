@@ -38,23 +38,20 @@
     (let [wallet (a-wallet :single-entry)
           entry (first (:entries wallet))
           btc-amount (:btc-amount entry)
-          container (t/render [c/wallet-history (merge wallet {:entries [entry]})])]
+          $ (t/render [c/wallet-history (merge wallet {:entries [entry]})])]
       (is (match? (if (pos? btc-amount) "text-success" "text-danger")
-                  (-> (t/q container (:btc-amount entry))
-                      t/get-class)))
+                  (t/get-class ($ {:get (str (:btc-amount entry))}))))
       (t/cleanup)))
 
   (testing "lenght of rows should be entries + 1 (header)"
     (let [wallet (mg/generate WalletHistory)
-          container (t/render [c/wallet-history wallet])]
+          $ (t/render [c/wallet-history wallet])]
       (is (match? (inc (count (:entries wallet)))
-                  (-> (t/qs container :row)
-                      t/length)))
+                  (t/length ($ {:get :row :many? true}))))
       (t/cleanup)))
 
   (testing "empty state should show alert"
-    (let [container (t/render [c/wallet-history (a-wallet :empty)])]
+    (let [$ (t/render [c/wallet-history (a-wallet :empty)])]
       (is (match? "No entries found yet."
-                  (-> (t/q container :alert)
-                      t/text)))
+                  (t/text ($ {:get :alert}))))
       (t/cleanup))))

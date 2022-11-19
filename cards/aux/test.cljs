@@ -1,11 +1,8 @@
 (ns aux.test
-  (:require-macros [aux.test])
-  #_{:clj-kondo/ignore [:unused-namespace]}
   (:require ["@testing-library/react" :as tlr]
-            [promesa.core :as p]
             [reagent.core :as r]))
 
-(def _wait-for tlr/waitFor)
+(def wait-for tlr/waitFor)
 
 (defn testing-container []
   (as-> (js/document.createElement "div") div
@@ -13,10 +10,10 @@
 
 (defn cleanup
   ([] (tlr/cleanup))
-  ([after-fn] (tlr/cleanup)
-              (after-fn)))
+  ([& after-fns] (tlr/cleanup)
+                 (doseq [f after-fns] (f))))
 
-(defn render
+(defn render-container
   [component]
   (tlr/render (r/as-element component)
               #js {:container (testing-container)}))
@@ -28,38 +25,26 @@
 (defn get-class [^js/Element el]
   (.toString (.-classList el)))
 
-(defn click
-  [^js/Element el]
-  (.click tlr/fireEvent el))
+(defn- testing-library-fn [search-value opt]
+  (str (if (:get opt) "get" "find")
+       (when (:many? opt) "All")
+       "By"
+       (if (keyword? search-value) "Role" "Text")))
 
-(defn qs
-  ([^js/Element container query-data]
-   (if (keyword? query-data)
-     (.getAllByRole container (name query-data))
-     (.getAllByText container query-data)))
-  ([^js/Element container query-data filter-data]
-   (.geAlltByRole container (name query-data) filter-data)))
+(defn $
+  "Search element(s) in the container by role or text. eg:
 
-(defn q
-  ([^js/Element container query-data]
-   (if (keyword? query-data)
-     (.getByRole container (name query-data))
-     (.getByText container query-data)))
-  ([^js/Element container query-data filter-data]
-   (.getByRole container (name query-data) filter-data)))
+  Get a button → `{:get :button}`
+  Get all rows → `{:get :row :many? true}`
+  Find anything with text foo → `{:find #\"foo\"}`
+  ```
+  "
+  [^js/Element container opt]
+  (let [search-value (or (:get opt) (:find opt))
+        testing-fn (aget container
+                         (testing-library-fn search-value opt))]
+    (.call testing-fn container (name search-value))))
 
-(defn q+
-  ([^js/Element container query-data]
-   (if (keyword? query-data)
-     (.findByRole container (name query-data))
-     (.findByText container query-data)))
-  ([^js/Element container query-data query-filter]
-   (.findByRole container (name query-data) query-filter)))
-
-(defn qs+
-  ([^js/Element container query-data]
-   (if (keyword? query-data)
-     (.findAllByRole container (name query-data))
-     (.findAllByText container query-data)))
-  ([^js/Element container query-data query-filter]
-   (.findAllByRole container (name query-data) query-filter)))
+(defn render
+  [component]
+  (partial $ (render-container component)))

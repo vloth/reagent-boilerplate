@@ -1,5 +1,5 @@
 (ns app.components
-  (:require [app.lib :refer [use-state]]
+  (:require ["react" :as react]
             [app.schemas :refer [WalletHistory]]
             [clojure.string :as str]
             [reagent.core :as r]
@@ -60,7 +60,7 @@
 
 (defn transaction-form
   [kind text on-submit]
-  (let [[amount set-amount] (use-state "")
+  (let [[amount set-amount] (react/useState "")
         on-submit (fn [event]
                     (.preventDefault event)
                     (on-submit (form-data (.-target event))))]

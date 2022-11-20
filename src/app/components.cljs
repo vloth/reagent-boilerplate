@@ -48,12 +48,22 @@
     [:p.col-md-8.fs-4
      "This is a complete example, with router, testing and fetch. 🎉"]]])
 
+;; ?
+(defn form-data [thing]
+  (if (.-FormData js/window)
+    (new js/FormData thing)
+    (let [form-state (atom thing)
+          f #js {}]
+      (set! (.-append f) #(swap! form-state assoc %1 %2))
+      (set! (.-get f) #(clj->js (get @form-state %)))
+      f)))
+
 (defn transaction-form
   [kind text on-submit]
   (let [[amount set-amount] (use-state "")
         on-submit (fn [event]
                     (.preventDefault event)
-                    (on-submit (new js/FormData (.-target event))))]
+                    (on-submit (form-data (.-target event))))]
     [:form {:on-submit on-submit}
      [:div.form-group.mb-2 [:label {:for "btc-amount"} "amount of btc"]
       [:input.form-control
@@ -61,7 +71,8 @@
         :name      "btc-amount"
         :type      "number"
         :step      "0.01"
-        :on-change #(set-amount (.. % -target -value))}]]
+        :on-change (fn [e]
+                     (set-amount (.. e -target -value)))}]]
      [:button.btn
       {:disabled (str/blank? amount) :className (str "btn-" (name kind))}
       text]]))

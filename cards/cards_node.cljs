@@ -15,5 +15,4 @@
 
 (.register happy-dom/GlobalRegistrator)
 (set! (.-node? js/window) true)
-
 (md/start!)

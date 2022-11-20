@@ -17,6 +17,7 @@
   "devDependencies": {
     "@happy-dom/global-registrator": "^7.6.0",
     "@testing-library/react": "^12.1.5",
+    "@testing-library/user-event": "^12.8.3",
     "clj-kondo": "2022.10.14",
     "highlight.js": "10.7.3",
     "marked": "^1.1.0",

@@ -25,8 +25,7 @@
   (s/del! storage-key))
 
 (defn start-node [handlers]
-  (p/do (reset! mock-state handlers)
-        (.listen ^js/Object @mock-state)))
+  (.listen ^js/Object (reset! mock-state handlers)))
 
 (defn stop-node []
   (p/do (.close ^js/Object @mock-state)
